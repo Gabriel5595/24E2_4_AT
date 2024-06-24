@@ -7,23 +7,13 @@ sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 from components.read_db import read_bd
 
 def add_registration_excel(file_path, df):
-    """
-    Adiciona um registro ao DataFrame a partir de um arquivo XLS.
-
-    Parâmetros:
-    caminho_xls (str): Caminho do arquivo XLS com os dados do carro.
-    df (DataFrame): DataFrame do banco de dados.
-
-    Retorna:
-    DataFrame: DataFrame atualizado com o novo registro.
-    """
-    # Lê o novo registro do arquivo XLS
-    new_registration = pd.read_excel(file_path)
-    
-    # Concatena o novo registro com o DataFrame existente
-    updated_df = pd.concat([df, new_registration], ignore_index=True)
-    
-    return updated_df
+    try:
+        new_registration = pd.read_excel(file_path)
+        updated_df = pd.concat([df, new_registration], ignore_index=True)
+        return updated_df
+    except Exception as e:
+        print(f"Erro ao carregar arquivo Excel '{file_path}': {str(e)}")
+        return False
 
 def main():
     
